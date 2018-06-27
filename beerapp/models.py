@@ -10,11 +10,15 @@ from django.db import models
 	
 # Beer Model
 class Beer(models.Model):
+	name = models.CharField(max_length=100,default=None)
 	ibu = models.IntegerField(null=False)
 	calories = models.IntegerField(null=False)
 	abv = models.FloatField(default=None)
 	style = models.CharField(max_length=100,default=None)
 	brewery_location = models.CharField(max_length=300,default=None)
+	
+	def __str__(self):
+		return self.name
 	
 
 class Review(models.Model):
