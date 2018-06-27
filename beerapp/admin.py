@@ -4,4 +4,8 @@ from django.contrib import admin
 from .models import Beer, Review
 
 admin.site.register(Beer)
-admin.site.register(Review)
+#admin.site.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+	list_display = ('aroma', 'appearance', 'taste', 'overall')
+
+admin.site.register(Review, ReviewAdmin)

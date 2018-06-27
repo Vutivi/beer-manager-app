@@ -1,0 +1,9 @@
+*To migrate database on heroku*
+
+1. (add/modify some someapp/models.py)
+2. python manage.py makemigrations someapp
+3. python manage.py migrate
+4. git add someapp/migrations/*.py (to add the new migration file)
+5. git commit -m "added migration for app someapp"
+6. git push heroku
+7. heroku run python manage.py migrate

@@ -18,9 +18,12 @@ class Beer(models.Model):
 	
 
 class Review(models.Model):
+	beer = models.ForeignKey(Beer, on_delete=models.CASCADE, default=None)
 	aroma = models.IntegerField(null=False)
 	appearance = models.IntegerField(null=False)
 	taste = models.IntegerField(null=False)
 	
 	def overall(self):
-		average = (self.aroma + self.appearance + self.taste)/3
+		average = (((self.aroma / 5) * 100)  + ((self.appearance  / 5) * 100) + ((self.taste / 5) * 100))/3
+		
+		return average
