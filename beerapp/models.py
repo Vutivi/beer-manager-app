@@ -1,12 +1,13 @@
 from django.db import models
 
-# User Model
-'''class User(models.Model):
-	username = models.CharField(max_length=40)
-	password = models.CharField(max_length=100)
-	
-	def __str__(self):
-		return self.username'''
+from django.core.exceptions import ValidationError
+
+def validate_only_one_instance(obj):
+	model = obj.__class__
+	if (model.objects.count() > 0 and
+			obj.id != model.objects.get().id):
+			raise ValidationError("Can only create 1 beer instance per day.")
+
 	
 # Beer Model
 class Beer(models.Model):
@@ -19,6 +20,9 @@ class Beer(models.Model):
 	
 	def __str__(self):
 		return self.name
+		
+	def clean(self):
+		validate_only_one_instance(self)
 	
 
 class Review(models.Model):
