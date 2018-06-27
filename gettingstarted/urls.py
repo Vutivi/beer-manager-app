@@ -11,6 +11,6 @@ import hello.views
 # url(r'^blog/', include('blog.urls')),
 
 urlpatterns = [
-    url(r'^$', admin.site.urls),
+    url(r'^$', hello.views.index, name='index'),
     path('admin/', admin.site.urls),
 ]
