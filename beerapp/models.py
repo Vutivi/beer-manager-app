@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Avg
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 
@@ -27,8 +28,13 @@ class Beer(models.Model):
 	
 	brewery_location = models.CharField(null=False, max_length=300,default=None)
 	
+	def ratings(self):
+		return Review.objects.filter(beer=self.id).get(Review.overall)
+		
 	def __str__(self):
 		return self.name
+		
+	
 		
 	#def clean(self):
 		#validate_only_one_instance(self)
@@ -44,12 +50,18 @@ class Review(models.Model):
 		
 	taste = models.IntegerField(null=False, default=1, validators=[MaxValueValidator(10), MinValueValidator(1)])
 	
-	def __str__(self):
-		return self.beer
 	
-	#Calculate overall
+	def overall(self):
+	
+		overall = (((self.aroma / 5) * 10)  + ((self.appearance  / 5) * 10) + self.taste)/3
+		return overall
+		
+	def __str__(self):
+		return "for "+str(self.beer)
+	
+	'''#Calculate overall
 	def overall(self):
 	
 		average = (((self.aroma / 5) * 10)  + ((self.appearance  / 5) * 10) + self.taste)/3
 		
-		return average
+		return average'''
