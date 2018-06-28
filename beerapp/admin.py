@@ -6,8 +6,8 @@ from .models import Beer, Review
 #admin.site.register(Beer)
 class BeerAdmin(admin.ModelAdmin):
 	
-	list_display = ('name','ibu', 'calories', 'abv', 'style', 'brewery_location', 'ratings')
-	list_display_links = ['ratings']
+	list_display = ('name','ibu', 'calories', 'abv', 'style', 'brewery_location', 'overall_ratings')
+	list_display_links = ['overall_ratings']
 	
 	
 
