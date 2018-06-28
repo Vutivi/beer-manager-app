@@ -30,8 +30,8 @@ class Beer(models.Model):
 	def __str__(self):
 		return self.name
 		
-	def clean(self):
-		validate_only_one_instance(self)
+	#def clean(self):
+		#validate_only_one_instance(self)
 	
 # Review Model
 class Review(models.Model):
@@ -43,6 +43,9 @@ class Review(models.Model):
 	appearance = models.IntegerField(null=False, default=1, validators=[MaxValueValidator(5), MinValueValidator(1)])
 		
 	taste = models.IntegerField(null=False, default=1, validators=[MaxValueValidator(10), MinValueValidator(1)])
+	
+	def __str__(self):
+		return self.id
 	
 	#Calculate overall
 	def overall(self):
