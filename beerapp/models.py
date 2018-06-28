@@ -17,15 +17,15 @@ class Beer(models.Model):
 
 	name = models.CharField(max_length=100,default=None)
 	
-	ibu = models.IntegerField(null=False)
+	ibu = models.IntegerField(null=False, default=30, validators=[MaxValueValidator(30), MinValueValidator(50)])
 	
-	calories = models.IntegerField(null=False)
+	calories = models.IntegerField(null=False, default=64, validators=[MaxValueValidator(64), MinValueValidator(198)])
 	
-	abv = models.FloatField(default=None)
+	abv = models.FloatField(default=4.5, validators=[MaxValueValidator(4.5), MinValueValidator(6.2)])
 	
-	style = models.CharField(max_length=100,default=None)
+	style = models.CharField(null=False, max_length=100,default=None)
 	
-	brewery_location = models.CharField(max_length=300,default=None)
+	brewery_location = models.CharField(null=False, max_length=300,default=None)
 	
 	def __str__(self):
 		return self.name
