@@ -21,7 +21,7 @@ class Beer(models.Model):
 	
 	calories = models.IntegerField(null=False, default=64, validators=[MaxValueValidator(198), MinValueValidator(64)])
 	
-	abv = models.FloatField(default=4.5, validators=[MaxValueValidator(4.2), MinValueValidator(4.5)])
+	abv = models.FloatField(default=4.5, validators=[MaxValueValidator(6.2), MinValueValidator(4.5)])
 	
 	style = models.CharField(null=False, max_length=100,default=None)
 	
