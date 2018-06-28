@@ -1,4 +1,4 @@
-from django.db.models import Avg
+from django.db.models import Avg, Sum
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -30,11 +30,16 @@ class Beer(models.Model):
 	
 	def overall_ratings(self):
 		
-		aroma = Review.objects.filter(beer=self.id).aggregate(Avg('aroma'))
-		appearance = Review.objects.filter(beer=self.id).aggregate(Avg('appearance'))
-		taste = Review.objects.filter(beer=self.id).aggregate(Avg('taste'))
+		aroma_sum = Review.objects.filter(beer=self.id).aggregate(Sum('aroma'))
+		
+		appearance_sum = Review.objects.filter(beer=self.id).aggregate(Sum('appearance'))
+		
+		taste_sum = Review.objects.filter(beer=self.id).aggregate(Sum('taste'))
+		
+		count = Review.objects.filter(beer=self.id).count()
+		
 		try:
-			return  aroma.get("aroma") + appearance.get("appearance") + taste.get("taste")
+			return  (((aroma_sum.get("aroma__sum")/(5 * count))*10) + ((appearance_sum.get("appearance__sum")/(5 * count))*10) + (((taste_sum.get("taste__sum")/(10 * count))*10)))/ (3 * count)
 		except:
 			return 0
 		
