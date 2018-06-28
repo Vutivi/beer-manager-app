@@ -45,7 +45,7 @@ class Review(models.Model):
 	taste = models.IntegerField(null=False, default=1, validators=[MaxValueValidator(10), MinValueValidator(1)])
 	
 	def __str__(self):
-		return self.id
+		return self.beer
 	
 	#Calculate overall
 	def overall(self):
