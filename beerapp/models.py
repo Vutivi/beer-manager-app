@@ -17,11 +17,11 @@ class Beer(models.Model):
 
 	name = models.CharField(max_length=100,default=None)
 	
-	ibu = models.IntegerField(null=False, default=30, validators=[MaxValueValidator(30), MinValueValidator(50)])
+	ibu = models.IntegerField(null=False, default=30, validators=[MaxValueValidator(50), MinValueValidator(30)])
 	
-	calories = models.IntegerField(null=False, default=64, validators=[MaxValueValidator(64), MinValueValidator(198)])
+	calories = models.IntegerField(null=False, default=64, validators=[MaxValueValidator(198), MinValueValidator(64)])
 	
-	abv = models.FloatField(default=4.5, validators=[MaxValueValidator(4.5), MinValueValidator(6.2)])
+	abv = models.FloatField(default=4.5, validators=[MaxValueValidator(4.2), MinValueValidator(4.5)])
 	
 	style = models.CharField(null=False, max_length=100,default=None)
 	
