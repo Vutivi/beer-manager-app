@@ -30,10 +30,13 @@ class Beer(models.Model):
 	
 	def overall_ratings(self):
 		
+		aroma = Review.objects.filter(beer=self.id).aggregate(Avg('aroma'))
+		appearance = Review.objects.filter(beer=self.id).aggregate(Avg('appearance'))
+		taste = Review.objects.filter(beer=self.id).aggregate(Avg('taste'))
 		try:
-			return Review.objects.filter(beer=self.id).aggregate(Avg('overall')) 
+			return  aroma.get("aroma") + appearance.get("appearance") + taste.get("taste")
 		except:
-			return 0.0
+			return 0
 		
 	def __str__(self):
 		return self.name
@@ -54,19 +57,13 @@ class Review(models.Model):
 		
 	taste = models.IntegerField(null=False, default=1, validators=[MaxValueValidator(10), MinValueValidator(1)])
 	
-	overall = models.FloatField(default=0.0)
 	
 	def __str__(self):
 		return "for "+str(self.beer)
 	
-	def get_overall(self):
-		try:
-			return (((aroma / 5) * 10)  + ((appearance  / 5) * 10) + taste)/3
-		except:
-			return 0.0
-	#Calculate overall
-	#def overall(self):
 	
-		#average = (((self.aroma / 5) * 10)  + ((self.appearance  / 5) * 10) + self.taste)/3
+	def overall(self):
+	
+		average = (((self.aroma / 5) * 10)  + ((self.appearance  / 5) * 10) + self.taste)/3
 		
-		#Sreturn average
+		return average
